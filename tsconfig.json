@@ -1,0 +1,32 @@
+{
+  "extends": "../dsh/tsconfig.base.client.json",
+  "compilerOptions": {
+        "outDir": "lib/types",
+    "rootDir": "src",
+    "composite": false,
+    "incremental": false,
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    "exactOptionalPropertyTypes": false,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+
+    "types": ["node"],
+    "paths": {
+      "@deepseek-ai/cordis": ["D:/Projects/deepseek-harness/dsh/vendor/cordis/lib/types/index.d.ts"],
+      "@deepseek-ai/cosmokit": ["D:/Projects/deepseek-harness/dsh/vendor/cosmokit/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-agent": ["D:/Projects/deepseek-harness/dsh/packages/core/agent/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-system-prompt": ["D:/Projects/deepseek-harness/dsh/packages/core/system-prompt/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-home-paths": ["D:/Projects/deepseek-harness/dsh/packages/util/home-paths/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-workspace": ["D:/Projects/deepseek-harness/dsh/packages/workspace/workspace/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-workspace/types": ["D:/Projects/deepseek-harness/dsh/packages/workspace/workspace/lib/types/types.d.ts"],
+      "@deepseek-ai/dsh-session": ["D:/Projects/deepseek-harness/dsh/packages/core/session/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-session/types": ["D:/Projects/deepseek-harness/dsh/packages/core/session/lib/types/types.d.ts"],
+      "@deepseek-ai/dsh-llm": ["D:/Projects/deepseek-harness/dsh/packages/llm/llm/lib/types/index.d.ts"],
+      "@deepseek-ai/dsh-scope": ["D:/Projects/deepseek-harness/dsh/packages/core/scope/lib/types/index.d.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["src/client"]
+}

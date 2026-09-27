@@ -1,0 +1,7 @@
+node_modules/
+*.tsbuildinfo
+.vitest-cache/
+
+# Local dev-only pnpm files: profile provides its own on github: install.
+pnpm-lock.yaml
+pnpm-workspace.yaml

@@ -1,0 +1,7 @@
+# Insert dsh-plugin-workspace-system: a workspace-scoped system-prompt
+# section edited from a sidebar panel. Per-workspace text lives under
+# $DSH_HOME/workspace-level-system/ (host-owned data directory), so the row
+# carries no config block.
+- insert:
+    - id: dsh-plugin-workspace-system
+      name: '@huanlin/dsh-plugin-workspace-system'
