@@ -10,7 +10,7 @@
 
 ## 功能
 
-- **workspace 级注入**：注册 `workspace-level-system` system prompt section（order 100，persona 区内）。provider 在每次请求组装时从会话 `header.cwd` 推导存储键并读取文本——空文本不贡献，目录缺失/读失败静默为空（fail-soft，不影响会话热路径）。
+- **workspace 级注入**：监听 `agent/created`，把 workspace 文本构造成带标题的 `<system-reminder>` 消息（source.kind `workspace-level-system`）经 `agent.inject()` 排入 next-step 边界——inbox 领取顺序使其位于 turn 1 首条用户消息之前（agent-instructions / preface-context 同款模式）。无 cwd/空文本不注入；目录缺失/读失败静默跳过（fail-soft）。编辑保存后对**下一个新会话**生效。
 - **sidebar 面板**：注册官方 sidebar 全局面板（`main` keyed 槽 + `sidebar.panellist` 列表槽，id `workspace-system`、order 40）。面板左侧列出全部 workspace（有已存提示词的带徽标）与孤儿条目（workspace 已删但数据残留），右侧为选中 workspace 的 textarea + 保存/清空。
 - **数据落盘**：`$DSH_HOME/workspace-level-system/`（即 `~/.dsh/workspace-level-system/`），每 workspace 两个文件：`<hash>.md`（原文）+ `<hash>.meta.json`（`{ "path": ... }` 供人工辨识）。host 侧自管，不进 settings.yaml。
 - **写通道**：自托管 `/wls/api` HTTP 路由（POST only，JSON envelope），`set` 经 `realpathNormalize` 规范化路径后落盘（空文本即清除），拒绝 > 1 MiB 文本；同源校验。
@@ -81,7 +81,7 @@ dsh plugin --profile web add "github:huanlinoto/dsh-plugin-workspace-system"
 ### 使用
 
 1. 面板左侧选中一个 workspace，右侧 textarea 输入提示词（例如团队编码规范、领域术语表）。
-2. 点「保存」——数据写入 `~/.dsh/workspace-level-system/<hash>.md`，该 workspace 下所有会话（含 subagent）下一轮请求的 system prompt 即包含此段（聊天顶部 SystemPromptRow 折叠行可见）。
+2. 点「保存」——数据写入 `~/.dsh/workspace-level-system/<hash>.md`，该 workspace 下**新开的会话**（含 subagent）在首条用户消息之前收到一条 `<system-reminder># Workspace Instructions: <路径>` 消息（会话记录 user/message 可见）。
 3. 点「清空」或保存空文本——删除数据文件，不再注入。
 4. 未注册 workspace 的目录（Ungrouped 会话）同样可用：其会话的 cwd 有独立存储键，只是不出现在面板列表里，可手工按 hash 建文件。
 

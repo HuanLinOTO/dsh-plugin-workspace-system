@@ -65,7 +65,7 @@
     "@deepseek-ai/dsh-client-ui-slots": "^0.1.7-rc.1",
     "@deepseek-ai/dsh-client-ui-workspace": "^0.1.7-rc.1",
     "@deepseek-ai/dsh-home-paths": "^0.1.7-rc.1",
-    "@deepseek-ai/dsh-system-prompt": "^0.1.7-rc.1",
+    "@deepseek-ai/dsh-llm": "^0.1.7-rc.1",
     "@deepseek-ai/dsh-workspace": "^0.1.7-rc.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -83,7 +83,7 @@
     "@deepseek-ai/dsh-client-ui-slots": { "optional": true },
     "@deepseek-ai/dsh-client-ui-workspace": { "optional": true },
     "@deepseek-ai/dsh-home-paths": { "optional": true },
-    "@deepseek-ai/dsh-system-prompt": { "optional": true },
+    "@deepseek-ai/dsh-llm": { "optional": true },
     "@deepseek-ai/dsh-workspace": { "optional": true },
     "react": { "optional": true },
     "react-dom": { "optional": true }

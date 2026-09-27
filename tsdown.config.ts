@@ -17,6 +17,7 @@ const ID = '@huanlin/dsh-plugin-workspace-system'
 /** DSH platform modules that stay external in the host bundle (peer deps). */
 const HOST_EXTERNALS = [
   '@deepseek-ai/cordis',
+  '@deepseek-ai/dsh-llm',
   '@deepseek-ai/dsh-home-paths',
   '@deepseek-ai/dsh-workspace',
 ]
