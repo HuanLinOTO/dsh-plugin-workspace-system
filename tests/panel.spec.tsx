@@ -10,7 +10,7 @@
 
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { WorkspaceSystemPanel } from '../src/client/panel.tsx'
+import { WorkspaceSystemPanel, type WorkspaceSystemPanelProps } from '../src/client/panel.tsx'
 import type { WorkspaceSystemApi, WorkspaceSystemEntry } from '../src/client/api.ts'
 import { en } from '../src/client/locales.ts'
 
@@ -61,7 +61,7 @@ function makeProps(options: {
     t: (key: keyof typeof en) => en[key],
     api: options.api,
     useWorkspaces: vi.fn((selector: (state: { items: typeof items }) => unknown) => selector({ items })),
-  } as never
+  } as unknown as WorkspaceSystemPanelProps
 }
 
 afterEach(cleanup)

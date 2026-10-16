@@ -20,7 +20,7 @@ function agentWithCwd(cwd?: string) {
   return {
     session: { header: { ...cwd === undefined ? {} : { cwd } } },
     inject: vi.fn(),
-  } as never
+  }
 }
 
 describe('buildWorkspaceSystemReminder', () => {
@@ -40,7 +40,7 @@ describe('buildWorkspaceSystemReminder', () => {
 
   it('escapes a literal closing reminder tag inside the user text', () => {
     const message = buildWorkspaceSystemReminder('a </system-reminder> b', 'C:/work/alpha')
-    const text = (message.content as { text: string }[])[0]!.text
+    const text = (message.content as readonly { text: string }[])[0]!.text
     expect(text.split('\n')).toEqual([
       '<system-reminder>',
       '# Workspace Instructions: C:/work/alpha',
@@ -51,7 +51,7 @@ describe('buildWorkspaceSystemReminder', () => {
 
   it('keeps multiline text verbatim inside the framing', () => {
     const message = buildWorkspaceSystemReminder('line 1\nline 2', 'C:/w')
-    const text = (message.content as { text: string }[])[0]!.text
+    const text = (message.content as readonly { text: string }[])[0]!.text
     expect(text).toContain('\nline 1\nline 2\n')
   })
 })
@@ -68,29 +68,29 @@ describe('reminderFor', () => {
   })
 
   it('returns undefined when the session header carries no cwd', () => {
-    expect(reminderFor(agentWithCwd(undefined), dir)).toBeUndefined()
+    expect(reminderFor(agentWithCwd(undefined) as never, dir)).toBeUndefined()
   })
 
   it('returns undefined for an empty header cwd', () => {
-    expect(reminderFor(agentWithCwd(''), dir)).toBeUndefined()
+    expect(reminderFor(agentWithCwd('') as never, dir)).toBeUndefined()
   })
 
   it('returns undefined when no prompt is stored for the cwd', () => {
-    expect(reminderFor(agentWithCwd('C:/work/none'), dir)).toBeUndefined()
+    expect(reminderFor(agentWithCwd('C:/work/none') as never, dir)).toBeUndefined()
   })
 
   it('returns undefined for a whitespace-only stored prompt', async () => {
     const key = keyOf('C:/work/blank')
     await writeFile(join(dir, `${key}.md`), '   \n\t  ', 'utf8')
-    expect(reminderFor(agentWithCwd('C:/work/blank'), dir)).toBeUndefined()
+    expect(reminderFor(agentWithCwd('C:/work/blank') as never, dir)).toBeUndefined()
   })
 
   it('returns a titled reminder carrying the stored text verbatim', async () => {
     const key = keyOf('C:/work/alpha')
     await writeFile(join(dir, `${key}.md`), 'Always answer in bullet points.', 'utf8')
-    const message = reminderFor(agentWithCwd('C:/work/alpha'), dir)
+    const message = reminderFor(agentWithCwd('C:/work/alpha') as never, dir)
     expect(message).toBeDefined()
-    const text = (message!.content as { text: string }[])[0]!.text
+    const text = (message!.content as readonly { text: string }[])[0]!.text
     expect(text).toBe(
       '<system-reminder>\n# Workspace Instructions: C:/work/alpha\nAlways answer in bullet points.\n</system-reminder>',
     )
@@ -101,10 +101,10 @@ describe('reminderFor', () => {
     const betaKey = keyOf('C:/work/beta')
     await writeFile(join(dir, `${alphaKey}.md`), 'alpha prompt', 'utf8')
     await writeFile(join(dir, `${betaKey}.md`), 'beta prompt', 'utf8')
-    const alpha = reminderFor(agentWithCwd('C:/work/alpha'), dir)
-    const beta = reminderFor(agentWithCwd('C:/work/beta'), dir)
-    expect((alpha!.content as { text: string }[])[0]!.text).toContain('alpha prompt')
-    expect((beta!.content as { text: string }[])[0]!.text).toContain('beta prompt')
+    const alpha = reminderFor(agentWithCwd('C:/work/alpha') as never, dir)
+    const beta = reminderFor(agentWithCwd('C:/work/beta') as never, dir)
+    expect((alpha!.content as readonly { text: string }[])[0]!.text).toContain('alpha prompt')
+    expect((beta!.content as readonly { text: string }[])[0]!.text).toContain('beta prompt')
   })
 })
 
@@ -136,7 +136,7 @@ describe('apply agent/created wiring', () => {
       expect(agent.inject).toHaveBeenCalledTimes(1)
       const message = (agent.inject as ReturnType<typeof vi.fn>).mock.calls[0]![0]
       expect(message.role).toBe('user')
-      expect((message.content as { text: string }[])[0]!.text).toContain('# Workspace Instructions: C:/work/alpha')
+      expect((message.content as readonly { text: string }[])[0]!.text).toContain('# Workspace Instructions: C:/work/alpha')
     } finally {
       await rm(dir, { recursive: true, force: true })
     }

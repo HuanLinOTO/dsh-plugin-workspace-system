@@ -103,7 +103,6 @@ describe('prompt persistence', () => {
   })
 
   it('serializes concurrent writes to one directory through withStoreWrite', async () => {
-    const key = keyOf('C:/work/alpha')
     const order: string[] = []
     const slow = withStoreWrite(dir, async () => {
       await new Promise(resolve => { setTimeout(resolve, 20) })

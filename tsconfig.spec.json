@@ -17,7 +17,7 @@
       "D:/Projects/deepseek-harness/dsh/node_modules/@types",
       "D:/Projects/deepseek-harness/dsh/scripts/types"
     ],
-    "types": ["node", "vitest/globals"],
+    "types": ["node"],
     "paths": {
       "@deepseek-ai/cordis": ["D:/Projects/deepseek-harness/dsh/vendor/cordis/lib/types/index.d.ts"],
       "@deepseek-ai/cosmokit": ["D:/Projects/deepseek-harness/dsh/vendor/cosmokit/lib/types/index.d.ts"],
